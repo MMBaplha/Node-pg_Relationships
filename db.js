@@ -1,21 +1,16 @@
 /** Database setup for BizTime. */
+const { Client } = require('pg');
 
-const { Client } = require("pg");
-
-let DB_URI; //being conditionally setting it to 2 DB_URI
-
-// If we're running in test "mode", use our test db
-// Make sure to create both databases!
-if (process.env.NODE_ENV === "test") {
-  DB_URI = "postgresql:///usersdb_test";
-} else {
-  DB_URI = "postgresql:///usersdb";
-}
-
-let db = new Client({
-  connectionString: DB_URI 
+const client = new Client({
+  user: 'mb34',
+  host: 'localhost',
+  database: 'biztime', 
+  password: '3473Heats@',
+  port: 5432, 
 });
 
-db.connect();
+client.connect()
+  .then(() => console.log("Connected to the database successfully"))
+  .catch(err => console.error("Connection error", err.stack));
 
-module.exports = db;
+module.exports = client;
